@@ -1,6 +1,6 @@
 # Netflix-originals-data-analysis-Exploring-trends-and-insights
 
-# Project Overview
+# Project Overview #
 This project involves analyzing the Netflix Originals dataset using MySQL to uncover trends and insights. By performing various SQL operations, such as GROUP BY, HAVING, ORDER BY, LIMIT, JOINS, WINDOW FUNCTIONS, and SUBQUERIES, we aim to explore key patterns in the data. This project provides hands-on experience in SQL-based data analysis, preparing participants for data analyst roles.
 
 # Objective:
