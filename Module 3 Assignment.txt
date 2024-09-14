@@ -1,0 +1,242 @@
+-- Part - 1  
+ 
+
+
+Select*from Customer_data_set;
+
+1. List all customers sorted by their age in ascending order.
+select*from customer_data_set order by Age;
+
+2. Display the top 10 customers with the highest balances.
+select*from customer_data_set order by Balance desc limit 10;
+
+3. List the average balance of customers in each region, only for regions where
+the average balance is above 60000.
+select Region, avg(Balance) as avaragebalance 
+from customer_data_set 
+group by Region having avg(Balance)>6000;
+
+4. Display the top 3 jobs with the highest total balance.
+select job, sum(Balance) as Totalbal from customer_data_set 
+group by Job order by Totalbal desc limit 3;
+
+5. Display the top 5 regions with the highest total balance.
+select Region, Sum(Balance) as TotalBal from customer_data_set 
+group by Region
+order by TotalBal limit 5;
+
+6. Find the total balance held by customers aged between 25 and 35 (inclusive).
+select sum(Balance) as Totalbalance from customer_data_set 
+where age between 25 and 35;
+
+7. List all male customers whose balance is greater than 50000.
+select Gender, Balance from customer_data_set 
+where Gender="Male" and Balance>50000;
+
+
+
+---- Part - 2
+
+
+1. Create a SQL script to create the above tables in the TechMart database.
+create database TechMart;
+use TechMart;
+
+create table Products(
+product_id int primary key,
+product_name varchar(500),
+price decimal(10, 3),
+category varchar(500)
+);
+ 
+create table Customers(
+Customer_id int primary key, 
+customer_name varchar(500),
+email varchar(500),
+phone varchar(500)
+);
+
+create table Orders(
+order_id int primary key,
+customer_id int,
+product_id int,
+quantity int not null,
+order_date date,
+foreign key (customer_id) references Customers(customer_id),
+foreign key (product_id) references Products(product_id)
+);
+
+
+-- Insert 5 sample records into the Products table
+
+insert into Products (product_id, product_name, price, category) values
+(1, 'Laptop', 1200.00, 'Electronics'),
+(2, 'Smartphone', 800.00, 'Electronics'),
+(3, 'Headphones', 150.00, 'Accessories'),
+(4, 'Office Chair', 300.00, 'Furniture'),
+(5, 'Desk Lamp', 50.00, 'Lighting');
+
+
+-- Insert 3 sample records into the Customers table
+
+insert into Customers (customer_id, customer_name, email, phone) values
+(1, 'John Doe', 'johndoe@example.com', '123-456-7890'),
+(2, 'Jane Smith', 'janesmith@example.com', '234-567-8901'),
+(3, 'Alice Johnson', 'alicejohnson@example.com', '345-678-9012');
+
+
+-- Insert 10 sample records into the Orders table with random customer and product associations
+
+insert into Orders (order_id, customer_id, product_id, quantity, order_date) values
+(1, 1, 2, 1, '2024-08-20'),
+(2, 2, 1, 1, '2024-08-21'),
+(3, 3, 4, 2, '2024-08-22'),
+(4, 1, 5, 3, '2024-08-23'),
+(5, 2, 3, 1, '2024-08-24'),
+(6, 3, 1, 2, '2024-08-25'),
+(7, 1, 4, 1, '2024-08-26'),
+(8, 2, 2, 2, '2024-08-27'),
+(9, 3, 5, 4, '2024-08-28'),
+(10, 1, 3, 1, '2024-08-29');
+
+
+
+---- Part - 3 
+
+
+create database Retail_co;
+use Retail_co;
+
+CREATE TABLE Customers (
+    customerid INT PRIMARY KEY,
+    name VARCHAR(100),
+    surname VARCHAR(100),
+    gender ENUM('Male', 'Female', 'Other'),
+    age INT,
+    region VARCHAR(100),
+    job VARCHAR(100),
+    balance DECIMAL(15, 2)
+);
+
+1. Update the job of the customer with customerid 200000008 to 'Data Scientist'.
+update Customers set job = "Data Scientist" where customerid=200000008;
+
+2. Increase the account balance of all customers by 10%.
+update Customers
+set balance = balance * 1.10 where customerid is not null;
+
+3. Set the balance of customers aged below 30 to 0.
+update Customers set balance=1000 where age<30;
+
+4. Update the region of the customer named 'Thomas Lawrence' to 'Wales'.
+update Customers set region="Wales" where name="Thomas Lawrence";
+
+5. Set the job of all male customers to 'Engineer'.
+update Customers set job="Engineer" where gender="Male";
+rollback;
+commit;
+
+8. Update the balance of customers whose names start with 'J' to double their
+current balance.
+update Customers set balance=balance*2 where name like 'J%';
+
+9. Update the job of the customer with the highest balance to 'Manager'.
+update Customers set job="Manager" 
+order by balance desc limit 1;
+
+10.Set the balance of customers in the 'England' region to 50000.
+update Customers set balance=50000 where region="England";
+
+
+
+---- Part - 4 
+
+
+CREATE TABLE Customers (
+    customerid INT PRIMARY KEY,
+    name VARCHAR(100),
+    surname VARCHAR(100),
+    gender ENUM('Male', 'Female', 'Other'),
+    age INT,
+    region VARCHAR(100),
+    job VARCHAR(100),
+    balance DECIMAL(15, 2)
+);
+
+
+1. Write a SQL query to delete all records of customers who are older than 50 years.
+delete from Customers where age>50;
+
+2. Delete the customer record with customerid 300000812 from the table.
+delete from Customers where customerid=300000812;
+
+3. Delete records of customers whose job title is 'Other'.
+delete from Customers where job="Others";
+
+4. Remove records of male customers older than 40 years.
+delete from Customers where gender="Male" and age>40;
+
+5. Remove records of customers who are from the 'Scotland' region and have a balance less than.
+delete from Customers where region="Scotland" and balance = 1000;
+
+
+
+
+ -- Part - 5 -- 
+
+
+ 
+create database Retail_Company;
+use Retail_Company;
+ 
+ create table Customers(
+ customerid int primary key,
+ name varchar(500),
+ surname varchar(500),
+ gender enum('Male', 'Female', 'other'),
+ age int,
+ region varchar(500),
+ job varchar(500),
+ balance decimal
+ );
+ 
+
+1. Determine the total number of male and female customers.
+select sum(gender) from Customers where gender='Male' and gender='Female';
+
+2. Find the maximum and minimum age of customers.
+select min(age) from Customers;
+select max(age) from Customers;
+
+3. Identify the region with the highest number of customers.
+SELECT region, COUNT(*) AS customer_count
+FROM customers
+GROUP BY region
+ORDER BY customer_count DESC
+LIMIT 1;
+
+4. Find the oldest and youngest customers in terms of age.
+select age from customers order by age limit 1;
+select age from customers order by age desc limit 1;
+select*from customers;
+
+5. Calculate the total balance of male and female customers separately.
+select gender, sum(balance) as totalbalance from customers group by gender;
+
+6. Find the job titles with the highest and lowest average balance.
+select job, avg(balance) as avgbal from customers
+group by job order by avgbal desc limit 1;
+select job, avg(balance) as avgbal from customers
+group by job order by avgbal limit 1;
+
+7. Find the most common job among customers.
+select job ,count(*) as job_count from customers group by job 
+order by job_count desc limit 1;
+
+8. Calculate the average balance of customers in each region.
+select region, avg(balance) as averagebal from customers
+group by region;
+
+9. Identify the top 3 regions with the highest total balance.
+select region, sum(balance) as totalbal from customers 
+group by region order by totalbal desc limit 3;
